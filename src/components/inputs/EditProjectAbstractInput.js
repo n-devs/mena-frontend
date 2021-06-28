@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import { useSelector, useDispatch } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
       root: {
@@ -19,6 +20,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function EditProjectAbstractInput() {
       const classes = useStyles();
+      //Get the whole state from characterReducer
+      const inputs = useSelector(state => state.inputs);
+
+      //Use for all the dispatch actions
+      const dispatch = useDispatch();
+
+      const onUpdate = (event) => {
+            // console.log(event.target.value);
+            dispatch({ type: "CHANGE_EDIT_PROJECT_ABSTRACT", payload: event.target.value })
+
+      }
 
       return (
             <Grid
@@ -34,7 +46,13 @@ export default function EditProjectAbstractInput() {
                   {/* <Grid item xs={1}></Grid> */}
                   <Grid item xs={10}>
                         {":"}
-                        <Input className={classes.textField} placeholder="กรอกข้อมูล" inputProps={{ 'aria-label': 'description' }} />
+                        <Input
+                              className={classes.textField}
+                              placeholder="กรอกข้อมูล"
+                              inputProps={{ 'aria-label': 'description' }}
+                              onChange={onUpdate}
+                              value={inputs.editProjectAbstract}
+                        />
                   </Grid>
 
 

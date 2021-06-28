@@ -1,8 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import FormControl from '@material-ui/core/FormControl';
+import { useSelector, useDispatch } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
       root: {
@@ -19,6 +18,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UserMessageInput() {
       const classes = useStyles();
+      //Get the whole state from characterReducer
+      const inputs = useSelector(state => state.inputs);
+
+      //Use for all the dispatch actions
+      const dispatch = useDispatch();
+
+      const onUpdate = (event) => {
+            // console.log(event.target.value);
+            dispatch({ type: "CHANGE_USER_MESSAGE", payload: event.target.value })
+
+      }
 
       return (
             <TextField
@@ -30,6 +40,8 @@ export default function UserMessageInput() {
                   rows={4}
                   margin="dense"
                   variant="outlined"
+                  onChange={onUpdate}
+                  value={inputs.userMessage}
             />
       );
 }

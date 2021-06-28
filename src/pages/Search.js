@@ -2,8 +2,6 @@ import React from 'react';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Grid from '@material-ui/core/Grid';
 import EAUButton from '../components/buttons/EAUButton';
-import AdminButton from '../components/buttons/AdminButton';
-import MemberButton from '../components/buttons/MemberButton';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import SearchAllInput from '../components/inputs/SearchAllInput';
@@ -20,11 +18,21 @@ import SignUpButton from '../components/buttons/SignUpButton';
 import ContactButton from '../components/buttons/ContactButton';
 import DownloadButton from '../components/buttons/DownloadButton';
 import EditDocButton from '../components/buttons/EditDocButton';
-
+import { useSelector } from 'react-redux';
 
 export default function SearchPage() {
       // const [loading, setLoading] = React.useState(false);
 
+      const buttons = useSelector(state => state.buttons);
+
+      React.useEffect(() => {
+            console.log(buttons.searchData);
+
+            if (buttons.searchData.response) {
+
+            }
+
+      }, [buttons.searchData])
 
 
       // component in page
@@ -166,7 +174,7 @@ export default function SearchPage() {
                               </Grid>
                               <Grid item xs={12} style={{ height: 400, width: '100%' }}>
                                     <div style={{ height: 400, width: '100%' }}>
-                                    <DataGrid rowHeight={25} rows={rows} columns={auth.status ? auth.privilege === "member" ? memberColumns: adminColumns :columns} />
+                                          <DataGrid rowHeight={25} rows={rows} columns={auth.status ? auth.privilege === "member" ? memberColumns : adminColumns : columns} />
 
                                     </div>
                               </Grid>

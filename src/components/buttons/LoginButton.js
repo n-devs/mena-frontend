@@ -3,6 +3,9 @@ import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { useHistory } from 'react-router-dom';
 import LoginIcon from '../../icons/LoginIcon.svg'
+import { fetchLogin } from '../../reducers/buttonReducer'
+import { useSelector, useDispatch } from 'react-redux';
+
 
 const useStyles = makeStyles((theme) => ({
       buttonContained: {
@@ -36,22 +39,35 @@ export default function LoginButton(props) {
 
       const classes = useStyles()
       const history = useHistory();
+      //Get the whole state from characterReducer
+      const inputs = useSelector(state => state.inputs);
+      //Use for all the dispatch actions
+      const dispatch = useDispatch();
 
       const goPage = () => {
             history.push('/member/login')
+      }
+
+      const onLogin = () => {
+            let username = inputs.username;
+            let password = inputs.password;
+            // console.log(username, password);
+            dispatch(fetchLogin(username, password))
+
       }
 
       if (props.variant === "contained") {
 
 
             return (<Button
+                  onClick={onLogin}
                   className={classes.buttonContained}
                   variant="contained"
                   {...props}
             >
                   {"เข้าสู่ระบบ"}
             </Button >)
-      } else if (props.startIcon) { 
+      } else if (props.startIcon) {
             return (<Button
                   onClick={goPage}
                   className={classes.buttonIcon}

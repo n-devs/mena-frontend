@@ -6,8 +6,6 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import HomeButton from '../components/buttons/HomeButton';
 import ContactIcon from '../icons/ContactIcon.svg';
-import LoginButton from '../components/buttons/LoginButton';
-import RegisterButton from '../components/buttons/RegisterButton';
 import FullNameInput from '../components/inputs/FullNameInput';
 import ProfessionInput from '../components/inputs/ProfessionInput';
 import PhoneNumberInput from '../components/inputs/PhoneNumberInput';
@@ -15,12 +13,21 @@ import EmailInput from '../components/inputs/EmailInput';
 import UserMessageInput from '../components/inputs/UserMessageInput';
 import SendButton from '../components/buttons/SendButton';
 import BackButton from '../components/buttons/BackButton';
-
+import { useSelector } from 'react-redux';
 
 export default function ContactUsPage() {
       // const [loading, setLoading] = React.useState(false);
 
+      const buttons = useSelector(state => state.buttons);
 
+      React.useEffect(() => {
+            console.log(buttons.contactUsData);
+
+            if(buttons.contactUsData.response) {
+
+            }
+
+      }, [buttons.contactUsData])
 
       // component in page
       function Tab() {

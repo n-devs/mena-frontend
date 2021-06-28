@@ -1,11 +1,12 @@
 
-import characterReducer from './characterReducer';
-import {combineReducers} from 'redux';
+import inputReducer from './inputReducer';
+import buttonReducer from './buttonReducer';
+import { combineReducers } from 'redux';
 
 //Combine all the sub reducers
 const rootReducer = combineReducers({
-    characters: characterReducer
-
+    inputs: inputReducer,
+    buttons: buttonReducer,
 })
 
 export default rootReducer

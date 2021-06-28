@@ -10,12 +10,20 @@ import UsernameInput from '../components/inputs/UsernameInput';
 import PasswordInput from '../components/inputs/PasswordInput';
 import LoginButton from '../components/buttons/LoginButton';
 import RegisterButton from '../components/buttons/RegisterButton';
-
+import { useSelector } from 'react-redux';
 
 export default function LoginUserPage() {
       // const [loading, setLoading] = React.useState(false);
+      const buttons = useSelector(state => state.buttons);
 
+      React.useEffect(() => {
+            console.log(buttons.loginData);
 
+            if (buttons.loginData.response) {
+
+            }
+
+      }, [buttons.loginData])
 
       // component in page
       function Tab() {

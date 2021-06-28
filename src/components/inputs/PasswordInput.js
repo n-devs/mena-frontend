@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import { useSelector, useDispatch } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
       root: {
@@ -18,7 +19,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PasswordInput(props) {
       const classes = useStyles();
-console.log(props.startAdornment);
+      //Get the whole state from characterReducer
+      const inputs = useSelector(state => state.inputs);
+
+      //Use for all the dispatch actions
+      const dispatch = useDispatch();
+
+      const onUpdate = (event) => {
+            // console.log(event.target.value);
+            dispatch({ type: "CHANGE_PASSWORD", payload: event.target.value })
+
+      }
+
       if (props.startAdornment) {
             return (
                   <TextField
@@ -30,6 +42,8 @@ console.log(props.startAdornment);
                         }}
                         margin="dense"
                         variant="outlined"
+                        onChange={onUpdate}
+                        value={inputs.password}
                   />
             );
       } else  {
@@ -41,6 +55,8 @@ console.log(props.startAdornment);
                         className={classes.textField}
                         margin="dense"
                         variant="outlined"
+                        onChange={onUpdate}
+                        value={inputs.password}
                   />
             );
       }

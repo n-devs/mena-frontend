@@ -5,7 +5,6 @@ import EAUButton from '../components/buttons/EAUButton';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import HomeButton from '../components/buttons/HomeButton';
-import AdminIcon from '../icons/AdminIcon.svg';
 import UsernameInput from '../components/inputs/UsernameInput';
 import PasswordInput from '../components/inputs/PasswordInput';
 import LoginButton from '../components/buttons/LoginButton';
@@ -14,11 +13,20 @@ import FullNameInput from '../components/inputs/FullNameInput';
 import PhoneNumberInput from '../components/inputs/PhoneNumberInput';
 import EmailInput from '../components/inputs/EmailInput';
 import ProfessionInput from '../components/inputs/ProfessionInput';
-
+import { useSelector } from 'react-redux';
 
 export default function RegisterUserPage() {
       // const [loading, setLoading] = React.useState(false);
+      const buttons = useSelector(state => state.buttons);
 
+      React.useEffect(() => {
+            console.log(buttons.registerData);
+
+            if (buttons.registerData.response) {
+
+            }
+
+      }, [buttons.registerData])
 
 
       // component in page

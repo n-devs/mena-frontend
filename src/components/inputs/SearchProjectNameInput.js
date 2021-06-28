@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import { useSelector, useDispatch } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
       root: {
@@ -13,13 +14,23 @@ const useStyles = makeStyles((theme) => ({
             marginLeft: theme.spacing(1),
             marginRight: theme.spacing(1),
             width: '25ch',
-           
+
       },
 }));
 
 export default function SearchProjectNameInput() {
       const classes = useStyles();
+      //Get the whole state from characterReducer
+      const inputs = useSelector(state => state.inputs);
 
+      //Use for all the dispatch actions
+      const dispatch = useDispatch();
+
+      const onUpdate = (event) => {
+            // console.log(event.target.value);
+            dispatch({ type: "CHANGE_SEARCH_PROJECT_NAME", payload: event.target.value })
+
+      }
       return (
             <Grid
                   container
@@ -32,7 +43,13 @@ export default function SearchProjectNameInput() {
                         <Typography>{"สืบค้น : ชื่อโครงงาน "}</Typography>
                   </Grid>
                   <Grid item xs={12}>
-                        <Input className={classes.textField} placeholder="ค้นหา" inputProps={{ 'aria-label': 'description','style':{ textAlign: "center"} }} />
+                        <Input
+                              className={classes.textField}
+                              placeholder="ค้นหา"
+                              inputProps={{ 'aria-label': 'description', 'style': { textAlign: "center" } }}
+                              onChange={onUpdate}
+                              value={inputs.searchProjectName}
+                        />
                   </Grid>
 
 

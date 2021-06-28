@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-// import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -21,15 +21,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AddProjectAbstractInput() {
       const classes = useStyles();
-
       //Get the whole state from characterReducer
-      // const addProjectAbstractState = useSelector(state => state.addProjectAbstractState);
+      const inputs = useSelector(state => state.inputs);
 
       //Use for all the dispatch actions
-      // const dispatch = useDispatch();
+      const dispatch = useDispatch();
 
-      const onUpdate = (e) => {
-            // dispatch({ type: "ADD_PROJECT_ABSTRACT_UPDATE", payload: e.target.value })
+      const onUpdate = (event) => {
+            // console.log(event.target.value);
+            dispatch({ type: "CHANGE_ADD_PROJECT_ABSTRACT", payload: event.target.value })
+
       }
 
       return (
@@ -47,11 +48,12 @@ export default function AddProjectAbstractInput() {
                   <Grid item xs={10}>
                         {":"}
                         <Input
-                              onChange={onUpdate}
-                              // value={addProjectAbstractState.value}
                               className={classes.textField}
                               placeholder="กรอกข้อมูล"
-                              inputProps={{ 'aria-label': 'บทคัดย่อโครงงาน' }} />
+                              inputProps={{ 'aria-label': 'บทคัดย่อโครงงาน' }}
+                              onChange={onUpdate}
+                              value={inputs.addProjectAbstract}
+                        />
                   </Grid>
 
 

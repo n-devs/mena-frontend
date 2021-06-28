@@ -1,5 +1,4 @@
 //Reducer for character information Initialize State
-import UserMessageInput from '../components/inputs/UserMessageInput';
 const initState = {
     username: null,
     password: null,
@@ -66,6 +65,91 @@ const inputReducer = (state = initState, action) => {
             return {
                 ...state,
                 projectYear: action.payload
+            }
+        case 'CHANGE_USER_MESSAGE':
+            return {
+                ...state,
+                userMessage: action.payload
+            }
+        case 'CHANGE_ADD_PROJECT_ABSTRACT':
+            return {
+                ...state,
+                addProjectAbstract: action.payload
+            }
+        case 'CHANGE_ADD_PROJECT_DATE':
+            return {
+                ...state,
+                addProjectDate: action.payload
+            }
+        case 'CHANGE_ADD_PROJECT_NAME':
+            return {
+                ...state,
+                addProjectName: action.payload
+            }
+        case 'CHANGE_ADD_PROJECT_ORGANIZER':
+            return {
+                ...state,
+                addProjectOrganizer: action.payload
+            }
+        case 'CHANGE_ADD_PROJECT_TYPE':
+            return {
+                ...state,
+                addProjectType: action.payload
+            }
+        case 'CHANGE_EDIT_PROJECT_ABSTRACT':
+            return {
+                ...state,
+                editProjectAbstract: action.payload
+            }
+        case 'CHANGE_EDIT_PROJECT_DATE':
+            return {
+                ...state,
+                editProjectDate: action.payload
+            }
+        case 'CHANGE_EDIT_PROJECT_NAME':
+            return {
+                ...state,
+                editProjectName: action.payload
+            }
+        case 'CHANGE_EDIT_PROJECT_ORGANIZER':
+            return {
+                ...state,
+                editProjectOrganizer: action.payload
+            }
+        case 'CHANGE_EDIT_PROJECT_TYPE':
+            return {
+                ...state,
+                editProjectType: action.payload
+            }
+        case 'CHANGE_SEARCH_ALL':
+            return {
+                ...state,
+                searchAll: action.payload
+            }
+        case 'CHANGE_SEARCH_PROJECT_ABSTRACT':
+            return {
+                ...state,
+                searchProjectAbstract: action.payload
+            }
+        case 'CHANGE_SEARCH_PROJECT_DATE':
+            return {
+                ...state,
+                searchProjectDate: action.payload
+            }
+        case 'CHANGE_SEARCH_PROJECT_NAME':
+            return {
+                ...state,
+                searchProjectName: action.payload
+            }
+        case 'CHANGE_SEARCH_PROJECT_ORGANIZER':
+            return {
+                ...state,
+                searchProjectOrganizer: action.payload
+            }
+        case 'CHANGE_SEARCH_PROJECT_TYPE':
+            return {
+                ...state,
+                searchProjectType: action.payload
             }
         default:
             return state
