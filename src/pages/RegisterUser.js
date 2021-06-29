@@ -13,20 +13,63 @@ import FullNameInput from '../components/inputs/FullNameInput';
 import PhoneNumberInput from '../components/inputs/PhoneNumberInput';
 import EmailInput from '../components/inputs/EmailInput';
 import ProfessionInput from '../components/inputs/ProfessionInput';
+import SuccessAlert from '../components/alerts/SuccessAlert';
+import ErrorAlert from '../components/alerts/ErrorAlert';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 export default function RegisterUserPage() {
       // const [loading, setLoading] = React.useState(false);
       const buttons = useSelector(state => state.buttons);
+      const history = useHistory();
+      const [successAlert, setSuccessAlert] = React.useState({
+            open: false,
+            message: ""
+      })
+
+      const [errorAlert, setErrorAlert] = React.useState({
+            open: false,
+            message: ""
+      })
+
+      const onSuccessAlertClose = () => {
+            setSuccessAlert({
+                  open: false,
+                  message: ""
+            })
+      }
+
+      const onErrorAlertClose = () => {
+            setErrorAlert({
+                  open: false,
+                  message: ""
+            })
+      }
 
       React.useEffect(() => {
             console.log(buttons.registerData);
 
             if (buttons.registerData.response) {
-
+                  if (buttons.registerData.response.statusCode === 201) {
+                        setSuccessAlert({
+                              open: true,
+                              message: "บันทึกข้อมูลแล้ว"
+                        })
+                        history.push('/member/login')
+                  } else if (buttons.registerData.response.statusCode === 400) {
+                        setErrorAlert({
+                              open: true,
+                              message: buttons.registerData.response.message
+                        })
+                  } else if (buttons.registerData.response.statusCode === 500) {
+                        setErrorAlert({
+                              open: false,
+                              message: buttons.registerData.response.message
+                        })
+                  }
             }
 
-      }, [buttons.registerData])
+      }, [buttons.registerData, history])
 
 
       // component in page
@@ -173,5 +216,7 @@ export default function RegisterUserPage() {
                         <Page></Page>
                   </Grid>
             </Grid>
+            <SuccessAlert open={successAlert.open} message={successAlert.message} onClose={onSuccessAlertClose}></SuccessAlert>
+            <ErrorAlert open={errorAlert.open} message={errorAlert.message} onClose={onErrorAlertClose}></ErrorAlert>
       </React.Suspense>)
 }

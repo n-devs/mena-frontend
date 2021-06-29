@@ -30,7 +30,16 @@ const buttonReducer = (state = initState, action) => {
                               store: action.payload
                         }
                   }
+
             case "GET_LOGIN_DATA":
+                  return {
+                        ...state,
+                        loginData: {
+                              ...state.loginData,
+                              response: action.payload
+                        }
+                  }
+            case "GET_LOGOUT_DATA":
                   return {
                         ...state,
                         loginData: {
@@ -91,6 +100,11 @@ const buttonReducer = (state = initState, action) => {
       }
 }
 
+export function fetchLogout() {
+      return dispatch => {
+            dispatch({ type: "GET_LOGOUT_DATA", payload: null })
+      }
+}
 
 // fetch
 export function fetchLogin(username, password) {
@@ -105,33 +119,77 @@ export function fetchLogin(username, password) {
 
             console.log("fetchLogin", data);
 
-            // let myHeaders = new Headers();
-            // myHeaders.append("Content-Type", "application/json");
+            let myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
 
-            // let raw = JSON.stringify(data);
+            let raw = JSON.stringify(data);
 
-            // let requestOptions = {
-            //       method: "POST",
-            //       headers: myHeaders,
-            //       body: raw,
-            //       redirect: "follow"
-            // };
+            let requestOptions = {
+                  method: "POST",
+                  headers: myHeaders,
+                  body: raw,
+                  redirect: "follow"
+            };
 
-            // // http://localhost:8080/api/login
-            // return fetch(`${env("API_URL")}/api/login`, requestOptions)
-            //       .then(response => response.json())
-            //       .then(result => {
-            //             console.log(result);
-            //             dispatch({ type: "GET_LOGIN_DATA", payload: result })
-            //       })
-            //       .catch(error => {
-            //             console.log(error);
-            //             dispatch({ type: "GET_LOGIN_DATA", payload: error })
+            // http://localhost:8080/api/login
+            return fetch(`${env("API_URL")}/api/login`, requestOptions)
+                  .then(response => response.json())
+                  .then(result => {
+                        console.log(result);
+                        dispatch({ type: "GET_LOGIN_DATA", payload: result })
+                        return result
+                  })
+                  .catch(error => {
+                        console.log(error);
+                        dispatch({ type: "GET_LOGIN_DATA", payload: error })
 
-            //             return error
-            //       });
+                        return error
+                  });
       }
 };
+
+// fetch
+export function fetchAdminLogin(username, password) {
+
+      return dispatch => {
+            let data = {
+                  username: username,
+                  password: password
+            };
+
+            dispatch({ type: "SEND_LOGIN_DATA", payload: data });
+
+            console.log("fetchLogin", data);
+
+            let myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            let raw = JSON.stringify(data);
+
+            let requestOptions = {
+                  method: "POST",
+                  headers: myHeaders,
+                  body: raw,
+                  redirect: "follow"
+            };
+
+            // http://localhost:8080/api/login
+            return fetch(`${env("API_URL")}/api/admin/login`, requestOptions)
+                  .then(response => response.json())
+                  .then(result => {
+                        console.log(result);
+                        dispatch({ type: "GET_LOGIN_DATA", payload: result })
+                        return result
+                  })
+                  .catch(error => {
+                        console.log(error);
+                        dispatch({ type: "GET_LOGIN_DATA", payload: error })
+
+                        return error
+                  });
+      }
+};
+
 
 
 // fetch
@@ -151,31 +209,32 @@ export function fetchRegister(fullName, phoneNumber, email, profession, username
 
             console.log("fetchRegister", data);
 
-            // let myHeaders = new Headers();
-            // myHeaders.append("Content-Type", "application/json");
+            let myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
 
-            // let raw = JSON.stringify(data);
+            let raw = JSON.stringify(data);
 
-            // let requestOptions = {
-            //       method: "POST",
-            //       headers: myHeaders,
-            //       body: raw,
-            //       redirect: "follow"
-            // };
+            let requestOptions = {
+                  method: "POST",
+                  headers: myHeaders,
+                  body: raw,
+                  redirect: "follow"
+            };
 
-            // // http://localhost:8080/api/register
-            // return fetch(`${env("API_URL")}/api/register`, requestOptions)
-            //       .then(response => response.json())
-            //       .then(result => {
-            //             console.log(result);
-            //             dispatch({ type: "GET_REGISTER_DATA", payload: result })
-            //       })
-            //       .catch(error => {
-            //             console.log(error);
-            //             dispatch({ type: "GET_REGISTER_DATA", payload: error })
+            // http://localhost:8080/api/register
+            return fetch(`${env("API_URL")}/api/register`, requestOptions)
+                  .then(response => response.json())
+                  .then(result => {
+                        console.log(result);
+                        dispatch({ type: "GET_REGISTER_DATA", payload: result })
+                        return result
+                  })
+                  .catch(error => {
+                        console.log(error);
+                        dispatch({ type: "GET_REGISTER_DATA", payload: error })
 
-            //             return error
-            //       });
+                        return error
+                  });
       }
 };
 

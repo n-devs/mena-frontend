@@ -3,7 +3,7 @@ import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { useHistory } from 'react-router-dom';
 import LoginIcon from '../../icons/LoginIcon.svg'
-import { fetchLogin } from '../../reducers/buttonReducer'
+import { fetchLogin, fetchAdminLogin } from '../../reducers/buttonReducer'
 import { useSelector, useDispatch } from 'react-redux';
 
 
@@ -51,8 +51,13 @@ export default function LoginButton(props) {
       const onLogin = () => {
             let username = inputs.username;
             let password = inputs.password;
-            // console.log(username, password);
-            dispatch(fetchLogin(username, password))
+            console.log(username, password);
+            if (props.privilege === "admin") {
+                  dispatch(fetchAdminLogin(username, password))
+            } else {
+                  dispatch(fetchLogin(username, password))
+            }
+
 
       }
 

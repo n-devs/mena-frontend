@@ -10,20 +10,63 @@ import UsernameInput from '../components/inputs/UsernameInput';
 import PasswordInput from '../components/inputs/PasswordInput';
 import LoginButton from '../components/buttons/LoginButton';
 import RegisterButton from '../components/buttons/RegisterButton';
+import SuccessAlert from '../components/alerts/SuccessAlert';
+import ErrorAlert from '../components/alerts/ErrorAlert';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 export default function LoginUserPage() {
       // const [loading, setLoading] = React.useState(false);
       const buttons = useSelector(state => state.buttons);
+      const history= useHistory()
+      const [successAlert, setSuccessAlert] = React.useState({
+            open: false,
+            message: ""
+      })
+
+      const [errorAlert, setErrorAlert] = React.useState({
+            open: false,
+            message: ""
+      })
+
+      const onSuccessAlertClose = () => {
+            setSuccessAlert({
+                  open: false,
+                  message: ""
+            })
+      }
+
+      const onErrorAlertClose = () => {
+            setErrorAlert({
+                  open: false,
+                  message: ""
+            })
+      }
 
       React.useEffect(() => {
             console.log(buttons.loginData);
 
-            if (buttons.loginData.response) {
-
+             if (buttons.loginData.response) {
+                  if (buttons.loginData.response.statusCode === 200) {
+                        setSuccessAlert({
+                              open: true,
+                              message: buttons.loginData.response.message
+                        })
+                        history.push('/')
+                  } else if (buttons.loginData.response.statusCode === 400) {
+                        setErrorAlert({
+                              open: true,
+                              message: buttons.loginData.response.message
+                        })
+                  } else if (buttons.loginData.response.statusCode === 500) {
+                        setErrorAlert({
+                              open: false,
+                              message: buttons.loginData.response.message
+                        })
+                  }
             }
 
-      }, [buttons.loginData])
+      }, [buttons.loginData, history])
 
       // component in page
       function Tab() {
@@ -160,5 +203,7 @@ export default function LoginUserPage() {
                         <Page></Page>
                   </Grid>
             </Grid>
+            <SuccessAlert open={successAlert.open} message={successAlert.message} onClose={onSuccessAlertClose}></SuccessAlert>
+            <ErrorAlert open={errorAlert.open} message={errorAlert.message} onClose={onErrorAlertClose}></ErrorAlert>
       </React.Suspense>)
 }

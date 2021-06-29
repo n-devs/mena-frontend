@@ -7,16 +7,21 @@ import MemberButton from '../components/buttons/MemberButton';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import StudyInfomationButton from '../components/buttons/StudyInfomationButton';
-
+import { useSelector } from 'react-redux';
+import LogoutButton from '../components/buttons/LogoutButton';
+import AdminManageButton from '../components/buttons/AdminManageButton';
 
 
 export default function HomePage() {
       // const [loading, setLoading] = React.useState(false);
-
+      const buttons = useSelector(state => state.buttons);
 
 
       // component in page
-      function Tab() {
+      function Tab(props) {
+
+
+            console.log(props);
             return (<React.Fragment>
                   <Grid
                         container
@@ -32,8 +37,19 @@ export default function HomePage() {
                               justifyContent: "flex-end",
                               display: "flex",
                         }}>
-                              <AdminButton></AdminButton>
-                              <MemberButton></MemberButton>
+                              {props.response ? (<React.Fragment>
+                                    {props.response.data[0].privilege_type === 0 && (<React.Fragment>
+                                          <AdminManageButton></AdminManageButton>
+                                          <LogoutButton></LogoutButton>
+                                    </React.Fragment>)}
+                                    {props.response.data[0].privilege_type === 1 && (<React.Fragment>
+                                          <LogoutButton></LogoutButton>
+                                    </React.Fragment>)}
+                              </React.Fragment>) : (<React.Fragment>
+                                    <AdminButton></AdminButton>
+                                    <MemberButton></MemberButton>
+                              </React.Fragment>)}
+
                         </Grid>
                   </Grid>
             </React.Fragment>)
@@ -113,7 +129,7 @@ export default function HomePage() {
                   <Grid item xs={12} style={{
                         width: "100%"
                   }}>
-                        <Tab></Tab>
+                        <Tab {...buttons.loginData}></Tab>
                   </Grid>
                   <Grid item xs={12} style={{
                         width: "100%",
